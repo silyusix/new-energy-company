@@ -8,19 +8,29 @@ const { Title } = Typography;
 
 const HomePage = () => {
   const [allCompanies, setAllCompanies] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false); // No longer loading from API
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    const loadCompanies = async () => {
+    // Data is now fetched directly from api.js, no need for async load here
+    const loadInitialData = async () => {
+      setLoading(true);
+      const data = await fetchCompanies(''); // Fetch all data initially
+      setAllCompanies(data);
+      setLoading(false);
+    };
+    loadInitialData();
+  }, []); // Empty dependency array to run only once
+
+  useEffect(() => {
+    const filterCompanies = async () => {
       setLoading(true);
       const data = await fetchCompanies(searchTerm);
       setAllCompanies(data);
       setLoading(false);
     };
-
-    loadCompanies();
+    filterCompanies();
   }, [searchTerm]);
 
   const handleSearch = (value) => {
