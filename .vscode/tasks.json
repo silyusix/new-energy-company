@@ -1,0 +1,37 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Create New Feature Spec",
+            "type": "shell",
+            "command": "powershell.exe",
+            "args": [
+                "-File",
+                ".\\.specify\\scripts\\powershell\\create-new-feature.ps1",
+                "-Json",
+                "'${input:featureDescription}'"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": true
+            },
+            "problemMatcher": []
+        }
+    ],
+    "inputs": [
+        {
+            "id": "featureDescription",
+            "type": "promptString",
+            "description": "Enter the natural language description for the new feature:",
+            "default": "Your feature description here"
+        }
+    ]
+}
